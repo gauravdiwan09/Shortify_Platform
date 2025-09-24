@@ -47,12 +47,13 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.csrf(AbstractHttpConfigurer::disable)
+        http.cors(cors -> {}) // enables CORS, configuration is in CorsConfigurationSource bean
+                .csrf(csrf -> csrf.disable()) // disables CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()  // signup/login APIs are public
+                        .requestMatchers("/api/auth/**").permitAll()      // signup/login APIs are public
                         .requestMatchers("/api/urls/**").authenticated() // URL CRUD needs JWT
-                        .requestMatchers("/{shortUrl}").permitAll()  // visiting shortened URLs is public
-                        .anyRequest().permitAll() // default allow others (you can tighten this later)
+                        .requestMatchers("/{shortUrl}").permitAll()       // visiting shortened URLs is public
+                        .anyRequest().permitAll()                         // default allow others
                 );
 
         // register our custom provider
