@@ -14,13 +14,10 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
 
-        // Add your new frontend URL
-        config.setAllowedOrigins(Arrays.asList(
-                "http://localhost:5173",
-                "https://shortifyquick.netlify.app"
-        ));
+        // Allow all origins
+        config.addAllowedOriginPattern("*"); // works with higher Spring Boot versions
+        config.setAllowCredentials(true);    // keep true if using Authorization headers/cookies
 
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
