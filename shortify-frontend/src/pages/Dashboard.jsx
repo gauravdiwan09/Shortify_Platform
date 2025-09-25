@@ -100,7 +100,7 @@ function Dashboard() {
               </thead>
               <tbody>
                 {myUrls.map((url, idx) => {
-                  const fullShortUrl = `https://shortify-platform-2.onrender.com/${url.shortUrl}`;
+                  const fullShortUrl = `https://shortify-platform-3.onrender.com/${url.shortUrl}`;
                   return (
                     <tr key={url.id}>
                       <td>{idx + 1}</td>

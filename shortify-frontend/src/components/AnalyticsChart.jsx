@@ -42,7 +42,7 @@ const AnalyticsChart = ({ shortUrl }) => {
         };
 
         const response = await axios.get(
-          `https://shortify-platform-2.onrender.com/api/urls/analytics/${shortUrl}?startDate=${formatDateTime(
+          `https://shortify-platform-3.onrender.com/api/urls/analytics/${shortUrl}?startDate=${formatDateTime(
             startDate
           )}&endDate=${formatDateTime(endDate, true)}`,
           {

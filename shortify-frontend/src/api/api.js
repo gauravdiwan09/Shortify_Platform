@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://shortify-platform-2.onrender.com/api", // <- updated URL
+  baseURL: "https://shortify-platform-3.onrender.com/api", // <- updated URL
 });
 
 // Add Authorization header if token exists

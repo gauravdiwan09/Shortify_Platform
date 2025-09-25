@@ -37,7 +37,7 @@ const TotalAnalyticsChart = () => {
         const formatDate = (date) => date.toISOString().split("T")[0];
 
         const response = await axios.get(
-          `https://shortify-platform-2.onrender.com/api/urls/totalClicks?startDate=${formatDate(
+          `https://shortify-platform-3.onrender.com/api/urls/totalClicks?startDate=${formatDate(
             startDate
           )}&endDate=${formatDate(endDate)}`,
           {
