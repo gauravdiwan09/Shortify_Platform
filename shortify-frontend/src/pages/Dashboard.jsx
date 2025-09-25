@@ -12,6 +12,7 @@ function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [newUrl, setNewUrl] = useState("");
   const [selectedUrl, setSelectedUrl] = useState(null);
+  const [copiedId, setCopiedId] = useState(null); // 👈 track copied row
 
   const navigate = useNavigate(); // Use navigate to redirect
 
@@ -52,7 +53,7 @@ function Dashboard() {
 
     // Redirect to login page and force a page reload
     navigate("/login");
-    window.location.reload();  // Reload the page to reset the state properly
+    window.location.reload(); // Reload the page to reset the state properly
   };
 
   useEffect(() => {
@@ -91,38 +92,52 @@ function Dashboard() {
                   <th>#</th>
                   <th>Original URL</th>
                   <th>Short URL</th>
+                  <th>Copy</th>
                   <th>Clicks</th>
                   <th>Created Date</th>
                   <th>Analytics</th>
                 </tr>
               </thead>
               <tbody>
-                {myUrls.map((url, idx) => (
-                  <tr key={url.id}>
-                    <td>{idx + 1}</td>
-                    <td>{url.originalUrl}</td>
-                    <td>
-                      <a
-                        href={`http://localhost:8080/${url.shortUrl}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {url.shortUrl}
-                      </a>
-                    </td>
-                    <td>{url.clickCount}</td>
-                    <td>{new Date(url.createdDate).toLocaleString()}</td>
-                    <td>
-                      <Button
-                        variant="info"
-                        size="sm"
-                        onClick={() => setSelectedUrl(url.shortUrl)}
-                      >
-                        View Analytics
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {myUrls.map((url, idx) => {
+                  const fullShortUrl = `http://localhost:8080/${url.shortUrl}`;
+                  return (
+                    <tr key={url.id}>
+                      <td>{idx + 1}</td>
+                      <td>{url.originalUrl}</td>
+                      <td>
+                        <a href={fullShortUrl} target="_blank" rel="noreferrer">
+                          {url.shortUrl}
+                        </a>
+                      </td>
+                      <td>
+                        <Button
+                          variant={copiedId === url.id ? "success" : "outline-secondary"}
+                          size="sm"
+                          onClick={() => {
+                            navigator.clipboard.writeText(fullShortUrl);
+                            setCopiedId(url.id);
+                            toast.success("Short URL copied!");
+                            setTimeout(() => setCopiedId(null), 4000);
+                          }}
+                        >
+                          {copiedId === url.id ? "Copied!" : "Copy"}
+                        </Button>
+                      </td>
+                      <td>{url.clickCount}</td>
+                      <td>{new Date(url.createdDate).toLocaleString()}</td>
+                      <td>
+                        <Button
+                          variant="info"
+                          size="sm"
+                          onClick={() => setSelectedUrl(url.shortUrl)}
+                        >
+                          View Analytics
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
           )}
